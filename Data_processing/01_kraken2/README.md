@@ -1,6 +1,8 @@
-# kraken2
+# Kraken2
 
 This module performs taxonomic classification of sequencing reads using [Kraken2](https://ccb.jhu.edu/software/kraken2/). It includes host depletion prior to classification to remove contaminating host reads.
+
+## Workflow
 
 ```
 Trimmed R1 FASTQ
@@ -39,7 +41,7 @@ Kraken2 parameters:
 
 **Submit jobs:**
 ```bash
-sbatch run_kraken2_RNA.sbatch
+sbatch run_kraken2.sbatch
 ```
 
 Edit the scripts to set paths for your host genome, Kraken2 database, and input FASTQ files before submitting.
@@ -48,7 +50,7 @@ Edit the scripts to set paths for your host genome, Kraken2 database, and input 
 
 | File | Description |
 |------|-------------|
-| `*_R1.trim.fastq.gz` | Trimmed RNA R1 FASTQ file used for host depletion and Kraken2 classification |
+| `*_R1.trim.fastq.gz` | Trimmed R1 FASTQ file used for host depletion and Kraken2 classification |
 | STAR index | Pre-built index of the host genome |
 | Kraken2 database | Standard or custom Kraken2 database directory |
 
