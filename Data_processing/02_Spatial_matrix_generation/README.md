@@ -1,6 +1,6 @@
-# RNA_analysis
+# Spatial Matrix Generation
 
-This module processes spatially-barcoded RNA sequencing data from MicroGT-DBiT experiments. It decodes dual spatial barcodes, extracts UMIs, aligns transcripts to a combined host-plus-bacterial genome, and generates a UMI-deduplicated gene-by-spot expression matrix.
+This module processes spatially-barcoded sequencing data from MicroGT-DBiT experiments. It decodes dual spatial barcodes, extracts UMIs, aligns transcripts to a combined host-plus-bacterial genome, and generates a UMI-deduplicated gene-by-spot expression matrix.
 
 ## Pipeline Overview
 
@@ -8,7 +8,7 @@ This module processes spatially-barcoded RNA sequencing data from MicroGT-DBiT e
 R1 (transcript reads) + R2 (spatial barcodes + UMI)
         │
         ▼
-ASTRO (configured via RNA_parameter.json)
+ASTRO (configured via parameter.json)
    ├── Barcode decoding  (dual 8 bp spatial barcodes anchored by fixed linkers)
    ├── UMI extraction    (22 bp fixed anchor + 10 bp random UMI)
    ├── STAR alignment    (host + bacterial reference index)
@@ -18,12 +18,12 @@ ASTRO (configured via RNA_parameter.json)
 Gene × Spot expression matrix
 ```
 
-RNA processing is handled by the external **ASTRO** tool. This folder contains the configuration and SLURM submission script needed to run it.
+Data processing is handled by the external **ASTRO** tool. This folder contains the configuration and SLURM submission script needed to run it.
 
 ## Files
 
-### `RNA_parameter.json`
-JSON configuration file that defines all parameters for the ASTRO RNA pipeline.
+### `parameter.json`
+JSON configuration file that defines all parameters for the ASTRO pipeline.
 
 Key fields:
 
@@ -33,7 +33,7 @@ Key fields:
 | `barcode_read` | Path to barcode/UMI read FASTQ (R2) |
 | `barcode_file` | Path to `spatial_barcodes.txt` whitelist |
 | `StructureUMI` | `CAAGCGTTGGCTTCTCGCATCT_10` — 22 bp fixed anchor + 10 bp random UMI |
-| `StructureBarcode` | `Dual 8 bp spatial barcode structure defined by fixed linker sequences |
+| `StructureBarcode` | Dual 8 bp spatial barcode structure defined by fixed linker sequences |
 | `gtffile` | Combined host + bacterial annotation file (`host_plus_bac.gtf`) |
 | `starref` | Path to STAR genome index directory |
 | `outputfolder` | Output directory for expression matrices and intermediate files |
@@ -42,7 +42,7 @@ Key fields:
 
 Edit this file to point to your data before running.
 
-### `run_RNA_parameter.sbatch`
+### `run_parameter.sbatch`
 SLURM batch script that submits the ASTRO job to an HPC cluster.
 
 Resource requirements:
@@ -53,20 +53,20 @@ Resource requirements:
 
 **Submit the job:**
 ```bash
-sbatch run_RNA_parameter.sbatch
+sbatch run_parameter.sbatch
 ```
 
 **Or run interactively:**
 ```bash
 conda activate astro
-ASTRO RNA_parameter.json
+ASTRO parameter.json
 ```
 
 ## Input Files
 
 | File | Description |
 |------|-------------|
-| `*_R1.fastq.gz` | Read 1 — RNA transcript reads |
+| `*_R1.fastq.gz` | Read 1 — transcript reads |
 | `*_R2.fastq.gz` | Read 2 — spatial barcodes and UMI |
 | `spatial_barcodes.txt` | Barcode whitelist: `BARCODE_B+BARCODE_A  X  Y` |
 | `host_plus_bac.gtf` | Combined host + bacterial GTF annotation (in `test_data/built_gtf/`) |
@@ -88,5 +88,5 @@ ASTRO RNA_parameter.json
 
 ## Notes
 
-- The `host_plus_bac.gtf` annotation in `test_data/built_gtf/` combines host genome gene annotations with bacterial gene models, allowing simultaneous quantification of both host and microbial transcripts in a single alignment step.
+- The `host_plus_bac.gtf` annotation combines host genome gene annotations with bacterial gene models, allowing simultaneous quantification of both host and microbial transcripts in a single alignment step.
 - UMI deduplication is applied to correct for PCR amplification bias.
