@@ -7,6 +7,7 @@ FFPE-MicroDBiT is a spatial technology for formalin-fixed paraffin-embedded (FFP
 
 <img width="971" height="370" alt="FFPE-MicroDBiT" src="https://github.com/user-attachments/assets/95549361-c646-43eb-9faa-71344d7bf924" />
 
+
 FFPE-MicroDBiT is a spatial transcriptomic platform that enables simultaneous profiling of microbial and host RNAs within the same FFPE tissue section. By integrating in situ RNA polyadenylation and random-primed transcript capture with deterministic microfluidic barcoding, followed by rRNA depletion, FFPE-MicroDBiT enables spatially resolved characterization of microbial transcriptional profiles alongside host gene expression in preserved tissues.
 
 ### Key Capabilities
